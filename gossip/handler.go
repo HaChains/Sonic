@@ -641,24 +641,39 @@ func (h *handler) Stop() {
 	log.Info("Stopping Fantom protocol")
 
 	h.brLeecher.Stop()
+	log.Info("brLeecher stopped")
 	h.brSeeder.Stop()
+	log.Info("brSeeder stopped")
 	h.brProcessor.Stop()
+	log.Info("brProcessor stopped")
 
 	h.bvLeecher.Stop()
+	log.Info("bvLeecher stopped")
 	h.bvSeeder.Stop()
+	log.Info("bvSeeder stopped")
 	h.bvProcessor.Stop()
+	log.Info("bvProcessor stopped")
 
 	h.dagLeecher.Stop()
+	log.Info("dagLeecher stopped")
 	h.dagSeeder.Stop()
+	log.Info("dagSeeder stopped")
 	h.dagProcessor.Stop()
+	log.Info("dagProcessor stopped")
 
 	h.epLeecher.Stop()
+	log.Info("epLeecher stopped")
 	h.epSeeder.Stop()
+	log.Info("epSeeder stopped")
 	h.epProcessor.Stop()
+	log.Info("epProcessor stopped")
 
 	h.checkers.Heavycheck.Stop()
+	log.Info("Heavycheck stopped")
 	h.txFetcher.Stop()
+	log.Info("txFetcher stopped")
 	h.dagFetcher.Stop()
+	log.Info("dagFetcher stopped")
 
 	close(h.quitProgressBradcast)
 	h.txsSub.Unsubscribe() // quits txBroadcastLoop
@@ -666,24 +681,32 @@ func (h *handler) Stop() {
 		h.emittedEventsSub.Unsubscribe() // quits eventBroadcastLoop
 		h.newEpochsSub.Unsubscribe()     // quits onNewEpochLoop
 	}
+	log.Info("subscriptions unsubscribed")
 
 	// Wait for the subscription loops to come down.
 	h.loopsWg.Wait()
+	log.Info("loopsWg stopped")
 
 	h.msgSemaphore.Terminate()
+	log.Info("msgSemaphore terminated")
 	// Quit the sync loop.
 	// After this send has completed, no new peers will be accepted.
 	close(h.quitSync)
+	log.Info("quitSync closed")
 
 	// Disconnect existing sessions.
 	// This also closes the gate for any new registrations on the peer set.
 	// sessions which are already established but not added to h.peers yet
 	// will exit when they try to register.
+	log.Info("peers closing...")
 	h.peers.Close()
+	log.Info("peers closed")
 
 	// Wait for all peer handler goroutines to come down.
 	h.wg.Wait()
+	log.Info("wg finished")
 	h.peerWG.Wait()
+	log.Info("peerWG finished")
 
 	log.Info("Fantom protocol stopped")
 }
