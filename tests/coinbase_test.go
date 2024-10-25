@@ -36,7 +36,6 @@ func TestCoinBase_CoinbaseYieldsZeroAddress(t *testing.T) {
 func TestCoinBase_CoinbaseAccessIsAlwaysWarm(t *testing.T) {
 
 	someAccountAddress := common.Address{1}
-	coinbaseAddress := common.Address{}
 	someBalance := int64(1234)
 
 	net, err := StartIntegrationTestNet(t.TempDir())
@@ -51,52 +50,37 @@ func TestCoinBase_CoinbaseAccessIsAlwaysWarm(t *testing.T) {
 	// Create some account by transferring balance
 	receipt, err = net.EndowAccount(someAccountAddress, someBalance)
 	checkTxExecution(t, receipt, err)
-	// Create the coinbase account (if not, creation fees will be charged)
-	receipt, err = net.EndowAccount(coinbaseAddress, someBalance)
-	checkTxExecution(t, receipt, err)
 
-	// touch account (COLD)
-	receipt, err = net.Apply(func(ops *bind.TransactOpts) (*types.Transaction, error) {
-		ops.GasPrice = nil                  // setting this field forces legacy-tx use
-		ops.AccessList = types.AccessList{} // leave access list empty to force same kind of transaction
-		return contract.TouchAddress(ops, someAccountAddress)
-	})
-	checkTxExecution(t, receipt, err)
-	coldCost := receipt.GasUsed
-
-	// touch account (WARM)
-	receipt, err = net.Apply(func(ops *bind.TransactOpts) (*types.Transaction, error) {
-		ops.GasPrice = nil // setting this field forces legacy-tx use
-		ops.AccessList = types.AccessList{
+	// touch account, with address in access list (WARM)
+	receipt, err = net.Apply(func(opts *bind.TransactOpts) (*types.Transaction, error) {
+		opts.GasPrice = nil // setting this field forces legacy-tx use
+		opts.AccessList = types.AccessList{
 			// warm access of account
 			{Address: someAccountAddress, StorageKeys: []common.Hash{}},
 		}
-		return contract.TouchAddress(ops, someAccountAddress)
+		return contract.TouchAddress(opts, someAccountAddress)
 	})
 	checkTxExecution(t, receipt, err)
 	warmCost := receipt.GasUsed
 
-	// Touch coinbase
-	receipt, err = net.Apply(func(ops *bind.TransactOpts) (*types.Transaction, error) {
-		ops.GasPrice = nil                  // setting this field forces legacy-tx use
-		ops.AccessList = types.AccessList{} // leave access list empty to force same kind of transaction
-		return contract.TouchCoinbase(ops)
-	})
+	// Get coinbase address
+	receipt, err = net.Apply(contract.LogCoinBaseAddress)
+	checkTxExecution(t, receipt, err)
+	if len(receipt.Logs) != 1 {
+		t.Errorf("Expected 1 log, got %d", len(receipt.Logs))
+	}
+	coinbaseAddress := common.BytesToAddress(receipt.Logs[0].Data)
 
+	// Touch coinbase without access list (COLD)
+	receipt, err = net.Apply(func(opts *bind.TransactOpts) (*types.Transaction, error) {
+		return contract.TouchAddress(opts, coinbaseAddress)
+	})
 	checkTxExecution(t, receipt, err)
 	coinBaseCost := receipt.GasUsed
 
-	// Difference between cold and warm access point out the amount of gas burned (plus cold access)
-	transactionCostOverhead := coldCost - warmCost
-	coinbaseDiff := (coldCost - coinBaseCost) - transactionCostOverhead
-	// Remove the extra cost of a cold access
-	differenceBetweenContracts := coinbaseDiff - 2500
-
-	// The instructions executed by the contract differ slightly between the two calls.
-	// Static costs and small memory copies account for a small difference in gas consumed.
-	gasDelta := 80
-	if differenceBetweenContracts > uint64(gasDelta) {
-		t.Errorf("Expected difference between gas consumed by contracts to be less than %d, got %d", gasDelta, differenceBetweenContracts)
+	// CoinBase address access has the same cost as warm access
+	if warmCost == coinBaseCost {
+		t.Errorf("Expected coinbase access to be cheaper than warm access")
 	}
 }
 

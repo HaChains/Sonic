@@ -31,8 +31,8 @@ var (
 
 // CoinbaseMetaData contains all meta data concerning the Coinbase contract.
 var CoinbaseMetaData = &bind.MetaData{
-	ABI: "[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"LogAddress\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"logCoinBaseAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"touchAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"touchCoinbase\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
-	Bin: "0x6080604052348015600e575f5ffd5b5061020a8061001c5f395ff3fe608060405234801561000f575f5ffd5b506004361061003f575f3560e01c8063713ee28514610043578063874395f81461004d578063d847a22b14610057575b5f5ffd5b61004b610073565b005b6100556100ac565b005b610071600480360381019061006c9190610135565b6100b7565b005b7fb123f68b8ba02b447d91a6629e121111b7dd6061ff418a60139c8bf00522a284416040516100a291906101bb565b60405180910390a1565b6100b5416100b7565b565b8073ffffffffffffffffffffffffffffffffffffffff16315f8190555050565b5f5ffd5b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f610104826100db565b9050919050565b610114816100fa565b811461011e575f5ffd5b50565b5f8135905061012f8161010b565b92915050565b5f6020828403121561014a576101496100d7565b5b5f61015784828501610121565b91505092915050565b5f819050919050565b5f61018361017e610179846100db565b610160565b6100db565b9050919050565b5f61019482610169565b9050919050565b5f6101a58261018a565b9050919050565b6101b58161019b565b82525050565b5f6020820190506101ce5f8301846101ac565b9291505056fea26469706673582212209ae6955b9fbfcc111b9360ab4a553ab92eec2e564767d625efd66a4475e9e79564736f6c634300081c0033",
+	ABI: "[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"LogAddress\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"logCoinBaseAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"touchAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	Bin: "0x6080604052348015600e575f5ffd5b506101ea8061001c5f395ff3fe608060405234801561000f575f5ffd5b5060043610610034575f3560e01c8063713ee28514610038578063d847a22b14610042575b5f5ffd5b61004061005e565b005b61005c60048036038101906100579190610115565b610097565b005b7fb123f68b8ba02b447d91a6629e121111b7dd6061ff418a60139c8bf00522a2844160405161008d919061019b565b60405180910390a1565b8073ffffffffffffffffffffffffffffffffffffffff16315f8190555050565b5f5ffd5b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f6100e4826100bb565b9050919050565b6100f4816100da565b81146100fe575f5ffd5b50565b5f8135905061010f816100eb565b92915050565b5f6020828403121561012a576101296100b7565b5b5f61013784828501610101565b91505092915050565b5f819050919050565b5f61016361015e610159846100bb565b610140565b6100bb565b9050919050565b5f61017482610149565b9050919050565b5f6101858261016a565b9050919050565b6101958161017b565b82525050565b5f6020820190506101ae5f83018461018c565b9291505056fea2646970667358221220426a4477232a0bcfa4947854315aa4331bca90b1cd9fc3976855a9006862518364736f6c634300081c0033",
 }
 
 // CoinbaseABI is the input ABI used to generate the binding from.
@@ -242,27 +242,6 @@ func (_Coinbase *CoinbaseSession) TouchAddress(addr common.Address) (*types.Tran
 // Solidity: function touchAddress(address addr) returns()
 func (_Coinbase *CoinbaseTransactorSession) TouchAddress(addr common.Address) (*types.Transaction, error) {
 	return _Coinbase.Contract.TouchAddress(&_Coinbase.TransactOpts, addr)
-}
-
-// TouchCoinbase is a paid mutator transaction binding the contract method 0x874395f8.
-//
-// Solidity: function touchCoinbase() returns()
-func (_Coinbase *CoinbaseTransactor) TouchCoinbase(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _Coinbase.contract.Transact(opts, "touchCoinbase")
-}
-
-// TouchCoinbase is a paid mutator transaction binding the contract method 0x874395f8.
-//
-// Solidity: function touchCoinbase() returns()
-func (_Coinbase *CoinbaseSession) TouchCoinbase() (*types.Transaction, error) {
-	return _Coinbase.Contract.TouchCoinbase(&_Coinbase.TransactOpts)
-}
-
-// TouchCoinbase is a paid mutator transaction binding the contract method 0x874395f8.
-//
-// Solidity: function touchCoinbase() returns()
-func (_Coinbase *CoinbaseTransactorSession) TouchCoinbase() (*types.Transaction, error) {
-	return _Coinbase.Contract.TouchCoinbase(&_Coinbase.TransactOpts)
 }
 
 // CoinbaseLogAddressIterator is returned from FilterLogAddress and is used to iterate over the raw logs and unpacked data for LogAddress events raised by the Coinbase contract.
