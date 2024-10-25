@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestPrevRandao_CanReadPrevRandaoFromHeadAndBlockAndHistory(t *testing.T) {
+func TestPrevRandao(t *testing.T) {
 	net, err := StartIntegrationTestNet(t.TempDir())
 	if err != nil {
 		t.Fatalf("Failed to start the fake network: %v", err)

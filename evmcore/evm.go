@@ -56,7 +56,7 @@ func NewEVMBlockContext(header *EvmHeader, chain DummyChain, author *common.Addr
 	difficulty := big.NewInt(1)
 	if header.PrevRandao.Cmp(common.Hash{}) != 0 {
 		random = &header.PrevRandao
-		difficulty.SetUint64(0)
+		difficulty.Set(random.Big())
 	}
 	return vm.BlockContext{
 		CanTransfer: CanTransfer,
