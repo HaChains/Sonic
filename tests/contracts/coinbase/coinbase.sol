@@ -2,13 +2,17 @@
 pragma solidity ^0.8.0;
 
 contract Coinbase {
-    event LogCoinbase(address fee);
-
-    function logCoinbase() public payable {
-        emit LogCoinbase(block.coinbase);
+    uint256 balance;
+    function touchAddress(address addr) public {
+        balance = addr.balance;
     }
 
-    function getCoinbase() public view returns (address) {
-        return block.coinbase;
+    function touchCoinbase() public {
+        touchAddress(block.coinbase);
+    }
+
+    event LogAddress(address addr);
+    function logCoinBaseAddress() public {
+        emit LogAddress(block.coinbase);
     }
 }

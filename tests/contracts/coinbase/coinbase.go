@@ -31,8 +31,8 @@ var (
 
 // CoinbaseMetaData contains all meta data concerning the Coinbase contract.
 var CoinbaseMetaData = &bind.MetaData{
-	ABI: "[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"fee\",\"type\":\"address\"}],\"name\":\"LogCoinbase\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"getCoinbase\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"logCoinbase\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"}]",
-	Bin: "0x6080604052348015600e575f5ffd5b506101a28061001c5f395ff3fe608060405260043610610028575f3560e01c80639c945ef11461002c578063d1a82a9d14610036575b5f5ffd5b610034610060565b005b348015610041575f5ffd5b5061004a610099565b60405161005791906100df565b60405180910390f35b7f3c7a1a2619f5180be3c6c302a3b4ec2f9051a356c12c319b58b01ce38bcd9c784160405161008f9190610153565b60405180910390a1565b5f41905090565b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f6100c9826100a0565b9050919050565b6100d9816100bf565b82525050565b5f6020820190506100f25f8301846100d0565b92915050565b5f819050919050565b5f61011b610116610111846100a0565b6100f8565b6100a0565b9050919050565b5f61012c82610101565b9050919050565b5f61013d82610122565b9050919050565b61014d81610133565b82525050565b5f6020820190506101665f830184610144565b9291505056fea2646970667358221220dcb064a104ed862d139b1868757a2704ba859692abbe0234e64a31eba57d039864736f6c634300081c0033",
+	ABI: "[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"LogAddress\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"logCoinBaseAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"addr\",\"type\":\"address\"}],\"name\":\"touchAddress\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"touchCoinbase\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	Bin: "0x6080604052348015600e575f5ffd5b5061020a8061001c5f395ff3fe608060405234801561000f575f5ffd5b506004361061003f575f3560e01c8063713ee28514610043578063874395f81461004d578063d847a22b14610057575b5f5ffd5b61004b610073565b005b6100556100ac565b005b610071600480360381019061006c9190610135565b6100b7565b005b7fb123f68b8ba02b447d91a6629e121111b7dd6061ff418a60139c8bf00522a284416040516100a291906101bb565b60405180910390a1565b6100b5416100b7565b565b8073ffffffffffffffffffffffffffffffffffffffff16315f8190555050565b5f5ffd5b5f73ffffffffffffffffffffffffffffffffffffffff82169050919050565b5f610104826100db565b9050919050565b610114816100fa565b811461011e575f5ffd5b50565b5f8135905061012f8161010b565b92915050565b5f6020828403121561014a576101496100d7565b5b5f61015784828501610121565b91505092915050565b5f819050919050565b5f61018361017e610179846100db565b610160565b6100db565b9050919050565b5f61019482610169565b9050919050565b5f6101a58261018a565b9050919050565b6101b58161019b565b82525050565b5f6020820190506101ce5f8301846101ac565b9291505056fea26469706673582212209ae6955b9fbfcc111b9360ab4a553ab92eec2e564767d625efd66a4475e9e79564736f6c634300081c0033",
 }
 
 // CoinbaseABI is the input ABI used to generate the binding from.
@@ -202,61 +202,72 @@ func (_Coinbase *CoinbaseTransactorRaw) Transact(opts *bind.TransactOpts, method
 	return _Coinbase.Contract.contract.Transact(opts, method, params...)
 }
 
-// GetCoinbase is a free data retrieval call binding the contract method 0xd1a82a9d.
+// LogCoinBaseAddress is a paid mutator transaction binding the contract method 0x713ee285.
 //
-// Solidity: function getCoinbase() view returns(address)
-func (_Coinbase *CoinbaseCaller) GetCoinbase(opts *bind.CallOpts) (common.Address, error) {
-	var out []interface{}
-	err := _Coinbase.contract.Call(opts, &out, "getCoinbase")
-
-	if err != nil {
-		return *new(common.Address), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
-
-	return out0, err
-
+// Solidity: function logCoinBaseAddress() returns()
+func (_Coinbase *CoinbaseTransactor) LogCoinBaseAddress(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Coinbase.contract.Transact(opts, "logCoinBaseAddress")
 }
 
-// GetCoinbase is a free data retrieval call binding the contract method 0xd1a82a9d.
+// LogCoinBaseAddress is a paid mutator transaction binding the contract method 0x713ee285.
 //
-// Solidity: function getCoinbase() view returns(address)
-func (_Coinbase *CoinbaseSession) GetCoinbase() (common.Address, error) {
-	return _Coinbase.Contract.GetCoinbase(&_Coinbase.CallOpts)
+// Solidity: function logCoinBaseAddress() returns()
+func (_Coinbase *CoinbaseSession) LogCoinBaseAddress() (*types.Transaction, error) {
+	return _Coinbase.Contract.LogCoinBaseAddress(&_Coinbase.TransactOpts)
 }
 
-// GetCoinbase is a free data retrieval call binding the contract method 0xd1a82a9d.
+// LogCoinBaseAddress is a paid mutator transaction binding the contract method 0x713ee285.
 //
-// Solidity: function getCoinbase() view returns(address)
-func (_Coinbase *CoinbaseCallerSession) GetCoinbase() (common.Address, error) {
-	return _Coinbase.Contract.GetCoinbase(&_Coinbase.CallOpts)
+// Solidity: function logCoinBaseAddress() returns()
+func (_Coinbase *CoinbaseTransactorSession) LogCoinBaseAddress() (*types.Transaction, error) {
+	return _Coinbase.Contract.LogCoinBaseAddress(&_Coinbase.TransactOpts)
 }
 
-// LogCoinbase is a paid mutator transaction binding the contract method 0x9c945ef1.
+// TouchAddress is a paid mutator transaction binding the contract method 0xd847a22b.
 //
-// Solidity: function logCoinbase() payable returns()
-func (_Coinbase *CoinbaseTransactor) LogCoinbase(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _Coinbase.contract.Transact(opts, "logCoinbase")
+// Solidity: function touchAddress(address addr) returns()
+func (_Coinbase *CoinbaseTransactor) TouchAddress(opts *bind.TransactOpts, addr common.Address) (*types.Transaction, error) {
+	return _Coinbase.contract.Transact(opts, "touchAddress", addr)
 }
 
-// LogCoinbase is a paid mutator transaction binding the contract method 0x9c945ef1.
+// TouchAddress is a paid mutator transaction binding the contract method 0xd847a22b.
 //
-// Solidity: function logCoinbase() payable returns()
-func (_Coinbase *CoinbaseSession) LogCoinbase() (*types.Transaction, error) {
-	return _Coinbase.Contract.LogCoinbase(&_Coinbase.TransactOpts)
+// Solidity: function touchAddress(address addr) returns()
+func (_Coinbase *CoinbaseSession) TouchAddress(addr common.Address) (*types.Transaction, error) {
+	return _Coinbase.Contract.TouchAddress(&_Coinbase.TransactOpts, addr)
 }
 
-// LogCoinbase is a paid mutator transaction binding the contract method 0x9c945ef1.
+// TouchAddress is a paid mutator transaction binding the contract method 0xd847a22b.
 //
-// Solidity: function logCoinbase() payable returns()
-func (_Coinbase *CoinbaseTransactorSession) LogCoinbase() (*types.Transaction, error) {
-	return _Coinbase.Contract.LogCoinbase(&_Coinbase.TransactOpts)
+// Solidity: function touchAddress(address addr) returns()
+func (_Coinbase *CoinbaseTransactorSession) TouchAddress(addr common.Address) (*types.Transaction, error) {
+	return _Coinbase.Contract.TouchAddress(&_Coinbase.TransactOpts, addr)
 }
 
-// CoinbaseLogCoinbaseIterator is returned from FilterLogCoinbase and is used to iterate over the raw logs and unpacked data for LogCoinbase events raised by the Coinbase contract.
-type CoinbaseLogCoinbaseIterator struct {
-	Event *CoinbaseLogCoinbase // Event containing the contract specifics and raw log
+// TouchCoinbase is a paid mutator transaction binding the contract method 0x874395f8.
+//
+// Solidity: function touchCoinbase() returns()
+func (_Coinbase *CoinbaseTransactor) TouchCoinbase(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _Coinbase.contract.Transact(opts, "touchCoinbase")
+}
+
+// TouchCoinbase is a paid mutator transaction binding the contract method 0x874395f8.
+//
+// Solidity: function touchCoinbase() returns()
+func (_Coinbase *CoinbaseSession) TouchCoinbase() (*types.Transaction, error) {
+	return _Coinbase.Contract.TouchCoinbase(&_Coinbase.TransactOpts)
+}
+
+// TouchCoinbase is a paid mutator transaction binding the contract method 0x874395f8.
+//
+// Solidity: function touchCoinbase() returns()
+func (_Coinbase *CoinbaseTransactorSession) TouchCoinbase() (*types.Transaction, error) {
+	return _Coinbase.Contract.TouchCoinbase(&_Coinbase.TransactOpts)
+}
+
+// CoinbaseLogAddressIterator is returned from FilterLogAddress and is used to iterate over the raw logs and unpacked data for LogAddress events raised by the Coinbase contract.
+type CoinbaseLogAddressIterator struct {
+	Event *CoinbaseLogAddress // Event containing the contract specifics and raw log
 
 	contract *bind.BoundContract // Generic contract to use for unpacking event data
 	event    string              // Event name to use for unpacking event data
@@ -270,7 +281,7 @@ type CoinbaseLogCoinbaseIterator struct {
 // Next advances the iterator to the subsequent event, returning whether there
 // are any more events found. In case of a retrieval or parsing error, false is
 // returned and Error() can be queried for the exact failure.
-func (it *CoinbaseLogCoinbaseIterator) Next() bool {
+func (it *CoinbaseLogAddressIterator) Next() bool {
 	// If the iterator failed, stop iterating
 	if it.fail != nil {
 		return false
@@ -279,7 +290,7 @@ func (it *CoinbaseLogCoinbaseIterator) Next() bool {
 	if it.done {
 		select {
 		case log := <-it.logs:
-			it.Event = new(CoinbaseLogCoinbase)
+			it.Event = new(CoinbaseLogAddress)
 			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 				it.fail = err
 				return false
@@ -294,7 +305,7 @@ func (it *CoinbaseLogCoinbaseIterator) Next() bool {
 	// Iterator still in progress, wait for either a data or an error event
 	select {
 	case log := <-it.logs:
-		it.Event = new(CoinbaseLogCoinbase)
+		it.Event = new(CoinbaseLogAddress)
 		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 			it.fail = err
 			return false
@@ -310,41 +321,41 @@ func (it *CoinbaseLogCoinbaseIterator) Next() bool {
 }
 
 // Error returns any retrieval or parsing error occurred during filtering.
-func (it *CoinbaseLogCoinbaseIterator) Error() error {
+func (it *CoinbaseLogAddressIterator) Error() error {
 	return it.fail
 }
 
 // Close terminates the iteration process, releasing any pending underlying
 // resources.
-func (it *CoinbaseLogCoinbaseIterator) Close() error {
+func (it *CoinbaseLogAddressIterator) Close() error {
 	it.sub.Unsubscribe()
 	return nil
 }
 
-// CoinbaseLogCoinbase represents a LogCoinbase event raised by the Coinbase contract.
-type CoinbaseLogCoinbase struct {
-	Fee common.Address
-	Raw types.Log // Blockchain specific contextual infos
+// CoinbaseLogAddress represents a LogAddress event raised by the Coinbase contract.
+type CoinbaseLogAddress struct {
+	Addr common.Address
+	Raw  types.Log // Blockchain specific contextual infos
 }
 
-// FilterLogCoinbase is a free log retrieval operation binding the contract event 0x3c7a1a2619f5180be3c6c302a3b4ec2f9051a356c12c319b58b01ce38bcd9c78.
+// FilterLogAddress is a free log retrieval operation binding the contract event 0xb123f68b8ba02b447d91a6629e121111b7dd6061ff418a60139c8bf00522a284.
 //
-// Solidity: event LogCoinbase(address fee)
-func (_Coinbase *CoinbaseFilterer) FilterLogCoinbase(opts *bind.FilterOpts) (*CoinbaseLogCoinbaseIterator, error) {
+// Solidity: event LogAddress(address addr)
+func (_Coinbase *CoinbaseFilterer) FilterLogAddress(opts *bind.FilterOpts) (*CoinbaseLogAddressIterator, error) {
 
-	logs, sub, err := _Coinbase.contract.FilterLogs(opts, "LogCoinbase")
+	logs, sub, err := _Coinbase.contract.FilterLogs(opts, "LogAddress")
 	if err != nil {
 		return nil, err
 	}
-	return &CoinbaseLogCoinbaseIterator{contract: _Coinbase.contract, event: "LogCoinbase", logs: logs, sub: sub}, nil
+	return &CoinbaseLogAddressIterator{contract: _Coinbase.contract, event: "LogAddress", logs: logs, sub: sub}, nil
 }
 
-// WatchLogCoinbase is a free log subscription operation binding the contract event 0x3c7a1a2619f5180be3c6c302a3b4ec2f9051a356c12c319b58b01ce38bcd9c78.
+// WatchLogAddress is a free log subscription operation binding the contract event 0xb123f68b8ba02b447d91a6629e121111b7dd6061ff418a60139c8bf00522a284.
 //
-// Solidity: event LogCoinbase(address fee)
-func (_Coinbase *CoinbaseFilterer) WatchLogCoinbase(opts *bind.WatchOpts, sink chan<- *CoinbaseLogCoinbase) (event.Subscription, error) {
+// Solidity: event LogAddress(address addr)
+func (_Coinbase *CoinbaseFilterer) WatchLogAddress(opts *bind.WatchOpts, sink chan<- *CoinbaseLogAddress) (event.Subscription, error) {
 
-	logs, sub, err := _Coinbase.contract.WatchLogs(opts, "LogCoinbase")
+	logs, sub, err := _Coinbase.contract.WatchLogs(opts, "LogAddress")
 	if err != nil {
 		return nil, err
 	}
@@ -354,8 +365,8 @@ func (_Coinbase *CoinbaseFilterer) WatchLogCoinbase(opts *bind.WatchOpts, sink c
 			select {
 			case log := <-logs:
 				// New log arrived, parse the event and forward to the user
-				event := new(CoinbaseLogCoinbase)
-				if err := _Coinbase.contract.UnpackLog(event, "LogCoinbase", log); err != nil {
+				event := new(CoinbaseLogAddress)
+				if err := _Coinbase.contract.UnpackLog(event, "LogAddress", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -376,12 +387,12 @@ func (_Coinbase *CoinbaseFilterer) WatchLogCoinbase(opts *bind.WatchOpts, sink c
 	}), nil
 }
 
-// ParseLogCoinbase is a log parse operation binding the contract event 0x3c7a1a2619f5180be3c6c302a3b4ec2f9051a356c12c319b58b01ce38bcd9c78.
+// ParseLogAddress is a log parse operation binding the contract event 0xb123f68b8ba02b447d91a6629e121111b7dd6061ff418a60139c8bf00522a284.
 //
-// Solidity: event LogCoinbase(address fee)
-func (_Coinbase *CoinbaseFilterer) ParseLogCoinbase(log types.Log) (*CoinbaseLogCoinbase, error) {
-	event := new(CoinbaseLogCoinbase)
-	if err := _Coinbase.contract.UnpackLog(event, "LogCoinbase", log); err != nil {
+// Solidity: event LogAddress(address addr)
+func (_Coinbase *CoinbaseFilterer) ParseLogAddress(log types.Log) (*CoinbaseLogAddress, error) {
+	event := new(CoinbaseLogAddress)
+	if err := _Coinbase.contract.UnpackLog(event, "LogAddress", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
