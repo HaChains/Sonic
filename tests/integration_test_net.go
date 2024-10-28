@@ -159,8 +159,7 @@ func (n *IntegrationTestNet) EndowAccount(
 	if err != nil {
 		return nil, fmt.Errorf("failed to sign transaction: %w", err)
 	}
-	receipt, err := n.Run(transaction)
-	return receipt, err
+	return n.Run(transaction)
 }
 
 // Run sends the given transaction to the network and waits for it to be processed.
