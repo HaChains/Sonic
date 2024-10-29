@@ -13,6 +13,7 @@ WORKDIR /go/Sonic
 COPY . .
 
 ARG GOPROXY
+ENV GOPROXY="https://goproxy.cn,direct"
 RUN go mod download
 RUN make all
 

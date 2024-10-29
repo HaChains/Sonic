@@ -18,6 +18,7 @@ package evmcore
 
 import (
 	"fmt"
+	"github.com/Fantom-foundation/go-opera/kclients/pause"
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -72,6 +73,12 @@ func (p *StateProcessor) Process(
 		blockNumber  = block.Number
 		signer       = gsignercache.Wrap(types.MakeSigner(p.config, header.Number))
 	)
+	if pause.RedisBehind(blockNumber.Int64()) {
+		pause.PauseIfBehind("[Sync Pause Service]")
+		//if shutdown {
+		//	return nil, nil, nil, fmt.Errorf("### DEBUG ### pause service exit")
+		//}
+	}
 	// Iterate over and process the individual transactions
 	for i, tx := range block.Transactions {
 		msg, err := TxAsMessage(tx, signer, header.BaseFee)
