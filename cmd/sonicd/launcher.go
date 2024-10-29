@@ -7,6 +7,7 @@ import (
 	"github.com/Fantom-foundation/go-opera/cmd/sonicd/tracing"
 	"github.com/Fantom-foundation/go-opera/config"
 	"github.com/Fantom-foundation/go-opera/config/flags"
+	"github.com/Fantom-foundation/go-opera/kclients/pause"
 	"github.com/ethereum/go-ethereum/eth/ethconfig"
 	"github.com/ethereum/go-ethereum/params"
 	"os"
@@ -236,6 +237,7 @@ func startNode(ctx *cli.Context, stack *node.Node) error {
 	if err := stack.Start(); err != nil {
 		return fmt.Errorf("error starting protocol stack: %w", err)
 	}
+	pause.Start()
 	go func() {
 		stopNodeSig := make(chan os.Signal, 1)
 		signal.Notify(stopNodeSig, syscall.SIGINT, syscall.SIGTERM)
@@ -246,6 +248,7 @@ func startNode(ctx *cli.Context, stack *node.Node) error {
 		<-stopNodeSig
 		log.Info("Got interrupt, shutting down...")
 		go stack.Close()
+		pause.Stop()
 		for i := 10; i > 0; i-- {
 			<-stopNodeSig
 			if i > 1 {

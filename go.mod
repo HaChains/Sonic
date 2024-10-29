@@ -44,7 +44,10 @@ require (
 	gopkg.in/urfave/cli.v1 v1.20.0
 )
 
-require github.com/Fantom-foundation/Carmen/go v0.0.0-20240919111317-5c737f72628f
+require (
+	github.com/Fantom-foundation/Carmen/go v0.0.0-20240919111317-5c737f72628f
+	github.com/go-redis/redis/v8 v8.11.5
+)
 
 require (
 	github.com/DataDog/zstd v1.4.5 // indirect
@@ -62,6 +65,7 @@ require (
 	github.com/cockroachdb/sentry-go v0.6.1-cockroachdb.2 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/deepmap/oapi-codegen v1.8.2 // indirect
+	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/dlclark/regexp2 v1.10.0 // indirect
 	github.com/dop251/goja v0.0.0-20220405120441-9037c2b61cbf // indirect
 	github.com/edsrzf/mmap-go v1.0.0 // indirect
