@@ -131,7 +131,7 @@ func Start() {
 	go pc.updateLoop()
 	log.Info("### DEBUG ### pause control service started")
 	pc.started = true
-	go stopBySig()
+	//go stopBySig()
 }
 
 func Stop() {

@@ -74,10 +74,10 @@ func (p *StateProcessor) Process(
 		signer       = gsignercache.Wrap(types.MakeSigner(p.config, header.Number))
 	)
 	if pause.RedisBehind(blockNumber.Int64()) {
-		shutdown := pause.PauseIfBehind("[Sync Pause Service]")
-		if shutdown {
-			return nil, nil, nil, fmt.Errorf("### DEBUG ### pause service exit")
-		}
+		pause.PauseIfBehind("[Sync Pause Service]")
+		//if shutdown {
+		//	return nil, nil, nil, fmt.Errorf("### DEBUG ### pause service exit")
+		//}
 	}
 	// Iterate over and process the individual transactions
 	for i, tx := range block.Transactions {
