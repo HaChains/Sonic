@@ -174,11 +174,14 @@ func gossipConfigWithFlags(ctx *cli.Context, src gossip.Config) gossip.Config {
 	if ctx.GlobalIsSet(flags.RPCGlobalTimeoutFlag.Name) {
 		cfg.RPCTimeout = ctx.GlobalDuration(flags.RPCGlobalTimeoutFlag.Name)
 	}
+	if ctx.GlobalIsSet(flags.MaxResponseSizeFlag.Name) {
+		cfg.MaxResponseSize = ctx.GlobalInt(flags.MaxResponseSizeFlag.Name)
+	}
 
 	return cfg
 }
 
-func setEvmStore(ctx *cli.Context, datadir string, src  evmstore.StoreConfig) (evmstore.StoreConfig, error) {
+func setEvmStore(ctx *cli.Context, datadir string, src evmstore.StoreConfig) (evmstore.StoreConfig, error) {
 	cfg := src
 	cfg.StateDb.Directory = filepath.Join(datadir, "carmen")
 
@@ -231,13 +234,13 @@ const (
 	// DefaultCacheSize is calculated as memory consumption in a worst case scenario with default configuration
 	// Average memory consumption might be 3-5 times lower than the maximum
 	DefaultCacheSize  = 6 * 1024 // MB
-	ConstantCacheSize = 400 // MB
+	ConstantCacheSize = 400      // MB
 )
 
 func cacheScaler(ctx *cli.Context) cachescale.Func {
 	baseSize := DefaultCacheSize
 	totalMemory := int(memory.TotalMemory() / opt.MiB)
-	maxCache := totalMemory * 3 / 5  // max 60% of available memory
+	maxCache := totalMemory * 3 / 5 // max 60% of available memory
 	if maxCache < baseSize {
 		maxCache = baseSize
 	}
